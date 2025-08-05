@@ -1,0 +1,3 @@
+API Access: https://data.seattle.gov/resource/kzjm-xkqj.json
+My latitude: 47.578393
+My longitude: -122.398786

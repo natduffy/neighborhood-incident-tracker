@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seattle Fire Incidents - One Mile Radius</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .container {
+            display: flex;
+            height: calc(100vh - 120px);
+        }
+        
+        .map-container {
+            flex: 2;
+            position: relative;
+        }
+        
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .sidebar {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+        }
+        
+        .incident-card {
+            background: #f8f9fa;
+            border-left: 4px solid #dc3545;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .incident-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .incident-number {
+            font-weight: bold;
+            color: #dc3545;
+            font-size: 1.1em;
+        }
+        
+        .incident-type {
+            color: #495057;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+        
+        .incident-address {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+        
+        .incident-datetime {
+            color: #6c757d;
+            font-size: 0.85em;
+            margin: 5px 0;
+        }
+        
+        .incident-distance {
+            background: #dc3545;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        
+        .legend {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .stats {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .stats h3 {
+            margin: 0 0 10px 0;
+            color: #495057;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 10px;
+            border-radius: 3px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #dc3545;
+        }
+        
+        .stat-label {
+            font-size: 0.8em;
+            color: #6c757d;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #6c757d;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚒 Seattle Fire Incidents</h1>
+        <p>Incidents within one mile of your location</p>
+    </div>
+    
+    <div class="container">
+        <div class="map-container">
+            <div id="map"></div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #dc3545;"></div>
+                    <span>Fire Incident</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #007bff; border: 2px solid #0056b3;"></div>
+                    <span>Your Location</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: rgba(220, 53, 69, 0.2); border: 2px dashed #dc3545;"></div>
+                    <span>1 Mile Radius</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar">
+            <div class="stats">
+                <h3>📊 Summary</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-incidents">-</div>
+                        <div class="stat-label">Total Incidents</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="closest-distance">-</div>
+                        <div class="stat-label">Closest (miles)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="incidents-list">
+                <div class="loading">Loading incidents...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Your coordinates from data.txt
+        const YOUR_LAT = 47.578393;
+        const YOUR_LON = -122.398786;
+        
+        // Embedded incident data (from filtered_incidents.json)
+        const incidentsData = [
+            {
+                "address": "2627 50th Ave Sw",
+                "type": "Automatic Fire Alarm Resd",
+                "datetime": "2025-08-03T04:24:00.000",
+                "latitude": "47.58073",
+                "longitude": "-122.395313",
+                "report_location": {
+                    "type": "Point",
+                    "coordinates": [-122.395313, 47.58073]
+                },
+                "incident_number": "F250105792",
+                "distance_miles": 0.228
+            },
+            {
+                "address": "2320 BONAIR PL SW",
+                "type": "MVI - Motor Vehicle Incident",
+                "datetime": "2025-08-01T21:13:00.000",
+                "latitude": "47.583127",
+                "longitude": "-122.400669",
+                "report_location": {
+                    "type": "Point",
+                    "coordinates": [-122.400669, 47.583127]
+                },
+                "incident_number": "F250105065",
+                "distance_miles": 0.338
+            },
+            {
+                "address": "California Ave Sw / Sw Hinds St",
+                "type": "MVI - Motor Vehicle Incident",
+                "datetime": "2025-08-04T16:40:00.000",
+                "latitude": "47.573821",
+                "longitude": "-122.386763",
+                "report_location": {
+                    "type": "Point",
+                    "coordinates": [-122.386763, 47.573821]
+                },
+                "incident_number": "F250106579",
+                "distance_miles": 0.643
+            },
+            {
+                "address": "2614 42nd Ave Sw",
+                "type": "Auto Fire Alarm",
+                "datetime": "2025-08-02T13:54:00.000",
+                "latitude": "47.580923",
+                "longitude": "-122.385183",
+                "report_location": {
+                    "type": "Point",
+                    "coordinates": [-122.385183, 47.580923]
+                },
+                "incident_number": "F250105425",
+                "distance_miles": 0.657
+            },
+            {
+                "address": "3400 California Ave Sw",
+                "type": "Rescue Elevator",
+                "datetime": "2025-08-02T07:05:00.000",
+                "latitude": "47.573182",
+                "longitude": "-122.386763",
+                "report_location": {
+                    "type": "Point",
+                    "coordinates": [-122.386763, 47.573182]
+                },
+                "incident_number": "F250105254",
+                "distance_miles": 0.666
+            },
+            {
+                "address": "1502 Alki Ave Sw",
+                "type": "Alarm Bell",
+                "datetime": "2025-08-04T01:35:00.000",
+                "latitude": "47.589873",
+                "longitude": "-122.393698",
+                "report_location": {
+                    "type": "Point",
+                    "coordinates": [-122.393698, 47.589873]
+                },
+                "incident_number": "F250106248",
+                "distance_miles": 0.827
+            }
+        ];
+        
+        // Initialize the map
+        const map = L.map('map').setView([YOUR_LAT, YOUR_LON], 14);
+        
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        
+        // Add your location marker
+        const yourLocation = L.marker([YOUR_LAT, YOUR_LON], {
+            icon: L.divIcon({
+                className: 'your-location',
+                html: '<div style="background: #007bff; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.3);"></div>',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            })
+        }).addTo(map);
+        
+        // Add a popup for your location
+        yourLocation.bindPopup('<b>Your Location</b><br>47.578393, -122.398786');
+        
+        // Add 1-mile radius circle
+        const radiusCircle = L.circle([YOUR_LAT, YOUR_LON], {
+            color: '#dc3545',
+            fillColor: '#dc3545',
+            fillOpacity: 0.1,
+            weight: 2,
+            radius: 1609.34 // 1 mile in meters
+        }).addTo(map);
+        
+        // Function to display incidents
+        function displayIncidents(incidents) {
+            const container = document.getElementById('incidents-list');
+            const statsContainer = document.getElementById('total-incidents');
+            const closestContainer = document.getElementById('closest-distance');
+            
+            // Update stats
+            statsContainer.textContent = incidents.length;
+            if (incidents.length > 0) {
+                closestContainer.textContent = incidents[0].distance_miles;
+            }
+            
+            if (incidents.length === 0) {
+                container.innerHTML = '<div class="loading">No incidents found within one mile.</div>';
+                return;
+            }
+            
+            // Clear loading message
+            container.innerHTML = '';
+            
+            // Add incidents to map and sidebar
+            incidents.forEach((incident, index) => {
+                // Create marker for map
+                const marker = L.marker([parseFloat(incident.latitude), parseFloat(incident.longitude)], {
+                    icon: L.divIcon({
+                        className: 'incident-marker',
+                        html: `<div style="background: #dc3545; width: 16px; height: 16px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.3);"></div>`,
+                        iconSize: [16, 16],
+                        iconAnchor: [8, 8]
+                    })
+                }).addTo(map);
+                
+                // Create popup content
+                const popupContent = `
+                    <div style="min-width: 200px;">
+                        <b>${incident.type}</b><br>
+                        <strong>Incident #:</strong> ${incident.incident_number}<br>
+                        <strong>Address:</strong> ${incident.address}<br>
+                        <strong>Date/Time:</strong> ${formatDateTime(incident.datetime)}<br>
+                        <strong>Distance:</strong> ${incident.distance_miles} miles
+                    </div>
+                `;
+                
+                marker.bindPopup(popupContent);
+                
+                // Create sidebar card
+                const card = document.createElement('div');
+                card.className = 'incident-card';
+                card.innerHTML = `
+                    <div class="incident-number">${incident.incident_number}</div>
+                    <div class="incident-type">${incident.type}</div>
+                    <div class="incident-address">${incident.address}</div>
+                    <div class="incident-datetime">${formatDateTime(incident.datetime)}</div>
+                    <div class="incident-distance">${incident.distance_miles} miles away</div>
+                `;
+                
+                // Add click handler to focus map on incident
+                card.addEventListener('click', () => {
+                    map.setView([parseFloat(incident.latitude), parseFloat(incident.longitude)], 16);
+                    marker.openPopup();
+                });
+                
+                container.appendChild(card);
+            });
+        }
+        
+        // Function to format datetime
+        function formatDateTime(datetimeStr) {
+            const date = new Date(datetimeStr);
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        // Display incidents when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            displayIncidents(incidentsData);
+        });
+    </script>
+</body>
+</html> 

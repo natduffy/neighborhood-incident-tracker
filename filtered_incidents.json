@@ -1,0 +1,116 @@
+[
+  {
+    "address": "2627 50th Ave Sw",
+    "type": "Automatic Fire Alarm Resd",
+    "datetime": "2025-08-03T04:24:00.000",
+    "latitude": "47.58073",
+    "longitude": "-122.395313",
+    "report_location": {
+      "type": "Point",
+      "coordinates": [
+        -122.395313,
+        47.58073
+      ]
+    },
+    "incident_number": "F250105792",
+    ":@computed_region_ru88_fbhk": "41",
+    ":@computed_region_kuhn_3gp2": "49",
+    ":@computed_region_q256_3sug": "18795",
+    "distance_miles": 0.228
+  },
+  {
+    "address": "2320 BONAIR PL SW",
+    "type": "MVI - Motor Vehicle Incident",
+    "datetime": "2025-08-01T21:13:00.000",
+    "latitude": "47.583127",
+    "longitude": "-122.400669",
+    "report_location": {
+      "type": "Point",
+      "coordinates": [
+        -122.400669,
+        47.583127
+      ]
+    },
+    "incident_number": "F250105065",
+    ":@computed_region_ru88_fbhk": "41",
+    ":@computed_region_kuhn_3gp2": "49",
+    ":@computed_region_q256_3sug": "18795",
+    "distance_miles": 0.338
+  },
+  {
+    "address": "California Ave Sw / Sw Hinds St",
+    "type": "MVI - Motor Vehicle Incident",
+    "datetime": "2025-08-04T16:40:00.000",
+    "latitude": "47.573821",
+    "longitude": "-122.386763",
+    "report_location": {
+      "type": "Point",
+      "coordinates": [
+        -122.386763,
+        47.573821
+      ]
+    },
+    "incident_number": "F250106579",
+    ":@computed_region_ru88_fbhk": "41",
+    ":@computed_region_kuhn_3gp2": "49",
+    ":@computed_region_q256_3sug": "18795",
+    "distance_miles": 0.643
+  },
+  {
+    "address": "2614 42nd Ave Sw",
+    "type": "Auto Fire Alarm",
+    "datetime": "2025-08-02T13:54:00.000",
+    "latitude": "47.580923",
+    "longitude": "-122.385183",
+    "report_location": {
+      "type": "Point",
+      "coordinates": [
+        -122.385183,
+        47.580923
+      ]
+    },
+    "incident_number": "F250105425",
+    ":@computed_region_ru88_fbhk": "41",
+    ":@computed_region_kuhn_3gp2": "49",
+    ":@computed_region_q256_3sug": "18795",
+    "distance_miles": 0.657
+  },
+  {
+    "address": "3400 California Ave Sw",
+    "type": "Rescue Elevator",
+    "datetime": "2025-08-02T07:05:00.000",
+    "latitude": "47.573182",
+    "longitude": "-122.386763",
+    "report_location": {
+      "type": "Point",
+      "coordinates": [
+        -122.386763,
+        47.573182
+      ]
+    },
+    "incident_number": "F250105254",
+    ":@computed_region_ru88_fbhk": "41",
+    ":@computed_region_kuhn_3gp2": "49",
+    ":@computed_region_q256_3sug": "18795",
+    "distance_miles": 0.666
+  },
+  {
+    "address": "1502 Alki Ave Sw",
+    "type": "Alarm Bell",
+    "datetime": "2025-08-04T01:35:00.000",
+    "latitude": "47.589873",
+    "longitude": "-122.393698",
+    "report_location": {
+      "type": "Point",
+      "coordinates": [
+        -122.393698,
+        47.589873
+      ]
+    },
+    "incident_number": "F250106248",
+    ":@computed_region_ru88_fbhk": "2",
+    ":@computed_region_kuhn_3gp2": "49",
+    ":@computed_region_q256_3sug": "18795",
+    "distance_miles": 0.827
+  }
+]
