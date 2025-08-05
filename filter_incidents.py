@@ -28,9 +28,9 @@ def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> fl
     
     return c * r
 
-def fetch_fire_data(api_url: str) -> List[Dict[str, Any]]:
+def fetch_incident_data(api_url: str) -> List[Dict[str, Any]]:
     """
-    Fetch fire incident data from the Seattle API.
+    Fetch incident data from the local API.
     """
     try:
         response = requests.get(api_url, timeout=30)
@@ -131,7 +131,7 @@ def main():
     """
     Main function to orchestrate the data fetching and filtering process.
     """
-    print("Seattle Fire Department Incident Filter")
+    print("Neighborhood Incident Tracker")
     print("=" * 40)
     
     # Read coordinates from data.txt
@@ -143,10 +143,10 @@ def main():
     
     print(f"Target coordinates: {target_lat}, {target_lon}")
     print(f"API URL: {api_url}")
-    print("\nFetching fire incident data...")
+    print("\nFetching incident data...")
     
     # Fetch all incidents
-    incidents = fetch_fire_data(api_url)
+    incidents = fetch_incident_data(api_url)
     
     if not incidents:
         print("No data received from the API.")

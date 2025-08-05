@@ -1,6 +1,6 @@
-# Seattle Fire Incident Tracker
+# Neighborhood Incident Tracker
 
-A real-time web application that tracks and displays fire incidents within one mile of specified coordinates in Seattle, Washington.
+A real-time web application that tracks and displays fire incidents within one mile of specified coordinates in any neighborhood.
 
 ## 🚒 Features
 
@@ -14,7 +14,7 @@ A real-time web application that tracks and displays fire incidents within one m
 ## 📁 Project Structure
 
 ```
-seattle-fire/
+neighborhood-incident-tracker/
 ├── data.txt                    # Configuration file with coordinates and API URL
 ├── filter_incidents.py         # Python script to fetch and filter incidents
 ├── map_viewer.html            # Static HTML viewer with embedded data
@@ -29,7 +29,7 @@ seattle-fire/
 
 ### Option 1: Dynamic Viewer (Recommended)
 1. Open `map_viewer_dynamic.html` in your web browser
-2. Data loads automatically from Seattle's API
+2. Data loads automatically from the local fire department API
 3. Use the "Refresh Data" button to get latest incidents
 
 ### Option 2: Static Viewer
@@ -62,10 +62,10 @@ My longitude: -122.398786
 
 ## 📊 Data Sources
 
-- **API Endpoint**: Seattle Fire Department 911 Incident Response
+- **API Endpoint**: Local Fire Department 911 Incident Response
 - **Data Format**: JSON with latitude, longitude, incident type, address, and timestamp
 - **Update Frequency**: Real-time as incidents are reported
-- **Coverage**: All of Seattle, Washington
+- **Coverage**: Configurable for any location with available incident data
 
 ## 🗺️ Map Features
 
@@ -104,10 +104,10 @@ Uses the Haversine formula to calculate accurate distances between geographic co
 - Filter: Incidents within 1.0 mile radius
 
 ### API Integration
-- **Endpoint**: `https://data.seattle.gov/resource/kzjm-xkqj.json`
+- **Endpoint**: Configurable (example: `https://data.seattle.gov/resource/kzjm-xkqj.json`)
 - **Method**: GET request
 - **Format**: JSON response
-- **Rate Limiting**: None specified by Seattle Open Data
+- **Rate Limiting**: Varies by data provider
 
 ### Browser Compatibility
 - Modern browsers with ES6+ support
@@ -159,7 +159,7 @@ This project is open source and available under the MIT License.
 
 ## 🙏 Acknowledgments
 
-- Seattle Open Data for providing the fire incident API
+- Local fire departments and open data providers for incident APIs
 - Leaflet.js for the interactive mapping functionality
 - OpenStreetMap for map tiles and data
 
