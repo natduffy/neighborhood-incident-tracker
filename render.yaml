@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: neighborhood-incident-tracker
+    env: static
+    buildCommand: echo "Static site - no build required"
+    staticPublishPath: .
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /map_viewer_dynamic.html
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+      - path: /*.html
+        name: Content-Type
+        value: text/html
+      - path: /*.js
+        name: Content-Type
+        value: application/javascript
+      - path: /*.css
+        name: Content-Type
+        value: text/css
+      - path: /*.json
+        name: Content-Type
+        value: application/json 

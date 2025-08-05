@@ -1,0 +1,27 @@
+{
+  "name": "neighborhood-incident-tracker",
+  "version": "1.0.0",
+  "description": "Real-time neighborhood incident tracker with interactive map",
+  "main": "map_viewer_dynamic.html",
+  "scripts": {
+    "start": "echo 'Static site - open map_viewer_dynamic.html in browser'",
+    "build": "echo 'Static site - no build required'",
+    "deploy": "echo 'Deploy to Render via GitHub integration'"
+  },
+  "keywords": [
+    "incident-tracker",
+    "neighborhood",
+    "fire-department",
+    "interactive-map",
+    "real-time",
+    "leaflet",
+    "javascript"
+  ],
+  "author": "Nat Duffy",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/natduffy/neighborhood-incident-tracker.git"
+  },
+  "homepage": "https://neighborhood-incident-tracker.onrender.com"
+} 
