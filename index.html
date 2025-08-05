@@ -445,7 +445,7 @@
             return R * c;
         }
         
-        // Filter incidents by distance
+        // Filter incidents by distance and sort by recency
         function filterIncidentsByDistance(incidents, targetLat, targetLon, maxDistance = 1.0) {
             return incidents
                 .filter(incident => {
@@ -457,7 +457,7 @@
                     incident.distance_miles = Math.round(distance * 1000) / 1000; // Round to 3 decimal places
                     return distance <= maxDistance;
                 })
-                .sort((a, b) => a.distance_miles - b.distance_miles);
+                .sort((a, b) => new Date(b.datetime) - new Date(a.datetime)); // Sort by recency (newest first)
         }
         
         // Clear existing markers
