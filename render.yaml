@@ -7,7 +7,7 @@ services:
     routes:
       - type: rewrite
         source: /*
-        destination: /map_viewer_dynamic.html
+        destination: /index.html
     headers:
       - path: /*
         name: Cache-Control

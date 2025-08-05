@@ -17,8 +17,7 @@ A real-time web application that tracks and displays fire incidents within one m
 neighborhood-incident-tracker/
 ├── data.txt                    # Configuration file with coordinates and API URL
 ├── filter_incidents.py         # Python script to fetch and filter incidents
-├── map_viewer.html            # Static HTML viewer with embedded data
-├── map_viewer_dynamic.html    # Dynamic HTML viewer with live API integration
+├── index.html                 # Main interactive map viewer with live API
 ├── filtered_incidents.json    # Sample filtered incident data
 ├── requirements.txt           # Python dependencies
 ├── seattle.gov.txt           # Additional Seattle data reference
@@ -27,29 +26,19 @@ neighborhood-incident-tracker/
 
 ## 🚀 Quick Start
 
-### Option 1: Dynamic Viewer (Recommended)
-1. Open `map_viewer_dynamic.html` in your web browser
+### Option 1: Web Browser (Recommended)
+1. Open `index.html` in your web browser
 2. Data loads automatically from the local fire department API
 3. Use the "Refresh Data" button to get latest incidents
 
-### Option 2: Static Viewer
+### Option 2: Command Line
 1. Run the Python script to fetch data:
    ```bash
    python3 filter_incidents.py
    ```
-2. Open `map_viewer.html` in your web browser
-3. View the filtered incidents
+2. View results in terminal and `filtered_incidents.json`
 
-### Option 3: Command Line
-1. Install dependencies:
-   ```bash
-   pip3 install requests
-   ```
-2. Run the filtering script:
-   ```bash
-   python3 filter_incidents.py
-   ```
-3. View results in terminal and `filtered_incidents.json`
+
 
 ## 🔧 Configuration
 

@@ -2,9 +2,9 @@
   "name": "neighborhood-incident-tracker",
   "version": "1.0.0",
   "description": "Real-time neighborhood incident tracker with interactive map",
-  "main": "map_viewer_dynamic.html",
+  "main": "index.html",
   "scripts": {
-    "start": "echo 'Static site - open map_viewer_dynamic.html in browser'",
+    "start": "echo 'Static site - open index.html in browser'",
     "build": "echo 'Static site - no build required'",
     "deploy": "echo 'Deploy to Render via GitHub integration'"
   },

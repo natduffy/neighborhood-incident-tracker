@@ -45,20 +45,20 @@ This guide will help you deploy the Neighborhood Incident Tracker to Render as a
 - Includes deployment scripts (for reference)
 
 ### index.html
-- Landing page with navigation options
-- Auto-redirects to dynamic viewer after 5 seconds
-- Provides links to different viewer options
+- Main interactive map viewer with live API integration
+- Auto-loads incident data when page opens
+- Provides refresh functionality and real-time updates
 
 ## 🔧 Customization
 
-### Change Default Viewer
-To change which viewer loads by default, edit `render.yaml`:
+### Change Default Page
+To change which page loads by default, edit `render.yaml`:
 
 ```yaml
 routes:
   - type: rewrite
     source: /*
-    destination: /map_viewer.html  # Change to static viewer
+    destination: /your-page.html  # Change to any HTML file
 ```
 
 ### Custom Domain
