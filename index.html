@@ -17,20 +17,20 @@
         .header {
             background: linear-gradient(135deg, #dc3545, #c82333);
             color: white;
-            padding: 20px;
+            padding: 10px 20px;
             text-align: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         .header h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 1.5em;
             font-weight: 300;
         }
         
         .header p {
-            margin: 10px 0 0 0;
-            font-size: 1.1em;
+            margin: 5px 0 0 0;
+            font-size: 0.9em;
             opacity: 0.9;
         }
         
@@ -97,7 +97,7 @@
         
         .container {
             display: flex;
-            height: calc(100vh - 180px);
+            height: calc(100vh - 120px);
         }
         
         .map-container {
@@ -119,6 +119,59 @@
             max-width: 400px;
         }
         
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            .header {
+                padding: 8px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.2em;
+            }
+            
+            .header p {
+                font-size: 0.8em;
+                margin: 3px 0 0 0;
+            }
+            
+            .refresh-controls {
+                padding: 10px 15px;
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch;
+            }
+            
+            .refresh-info {
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .map-container {
+                height: 300px;
+                flex: none;
+            }
+            
+            .sidebar {
+                flex: none;
+                max-width: none;
+                box-shadow: none;
+                border-top: 1px solid #e9ecef;
+            }
+            
+            .legend {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 10px 0;
+                text-align: center;
+            }
+        }
+        
         .incident-card {
             background: #f8f9fa;
             border-left: 4px solid #dc3545;
@@ -127,6 +180,29 @@
             border-radius: 5px;
             transition: all 0.3s ease;
             cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .incident-card {
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+            
+            .incident-number {
+                font-size: 1em;
+            }
+            
+            .incident-type {
+                font-size: 0.9em;
+            }
+            
+            .incident-address {
+                font-size: 0.85em;
+            }
+            
+            .incident-datetime {
+                font-size: 0.8em;
+            }
         }
         
         .incident-card:hover {
